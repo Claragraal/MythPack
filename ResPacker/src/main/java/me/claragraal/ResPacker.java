@@ -63,7 +63,7 @@ public final class ResPacker {
             for (File pack : resourcePacks) {
                 String[] array = createZip(pack);
 
-                writer.write("    - url: https://example.com/" + array[1] + ".zip" + newLine);
+                writer.write("    - url: https://github.com/Claragraal/MythPack/raw/main/output/" + array[1] + ".zip" + newLine);
                 writer.write("      hash: " + array[0] + newLine);
                 writer.write("      format: " + array[1] + newLine);
                 writer.write("      version: null" + newLine);
