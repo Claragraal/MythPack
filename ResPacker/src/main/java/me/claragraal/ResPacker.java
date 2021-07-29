@@ -16,7 +16,7 @@ import java.util.zip.ZipOutputStream;
  */
 public final class ResPacker {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, IOException {
 
         // Get base directory.
         File baseDir = new File(Paths.get("").toAbsolutePath().toString());
@@ -47,21 +47,44 @@ public final class ResPacker {
         }
 
         File textFile = new File("output/config.txt");
-        try (FileWriter fileWriter = new FileWriter(textFile)) {
-            try (BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
-                for (File pack : resourcePacks) {
-                    createZip(pack);
-                }
+        textFile.getParentFile().mkdirs();
+        if (textFile.exists()) textFile.delete();
+        textFile.createNewFile();
+
+        String newLine = System.getProperty("line.separator");
+
+        try (Writer writer = new BufferedWriter(new FileWriter(textFile))) {
+            writer.write("packs:" + newLine);
+            writer.write("  game:" + newLine);
+            writer.write("    restricted: false" + newLine);
+            writer.write("    permission: forceresourcepacks.pack.game" + newLine);
+            writer.write("    variants:" + newLine);
+
+            for (File pack : resourcePacks) {
+                String[] array = createZip(pack);
+
+                writer.write("    - url: https://example.com/" + array[1] + ".zip" + newLine);
+                writer.write("      hash: " + array[0] + newLine);
+                writer.write("      format: " + array[1] + newLine);
+                writer.write("      version: null" + newLine);
+                writer.write("      restricted: false" + newLine);
+                writer.write("      permission: forceresourcepacks.pack." + array[1] + newLine);
+                writer.write("      type: null" + newLine);
+                writer.write("      variants: null" + newLine);
             }
         } catch (IOException exception) {
             exception.printStackTrace();
         }
     }
 
+    /**
+     * @return [hash, format]
+     */
     private static String[] createZip(File pack) {
-        String[] array = new String[4];
+        String[] array = new String[2];
 
-        File output = new File(pack.getParent(), String.format("output%s%s.zip", File.separator, pack.getName()));
+        String outputName = pack.getName().split("_")[0];
+        File output = new File(pack.getParent(), String.format("output%s%s.zip", File.separator, outputName));
         output.getParentFile().mkdirs();
         if (output.exists()) output.delete();
 
@@ -96,8 +119,12 @@ public final class ResPacker {
                 fileOutputStream.close();
 
                 System.out.printf("Finished zipping: %s%n", output.getName());
-                System.out.printf("Hash: %s%n", createSha1(output));
+                String hash = createSha1(output);
+                System.out.printf("Hash: %s%n", hash);
                 System.out.println();
+
+                array[0] = hash;
+                array[1] = outputName;
             }
         } catch (IOException exception) {
             exception.printStackTrace();
