@@ -75,16 +75,14 @@ public final class ResPacker {
             }
 
             for (Map.Entry<Integer, File> entry : orderedPacks.entrySet()) {
-                String[] array = createZip(entry.getValue());
+                File outputZip = new File(baseDir, String.format("output/%s.zip", entry.getKey()));
+                String hash = createSha1(outputZip);
 
-                writer.write("    - url: https://github.com/Claragraal/MythPack/raw/main/output/" + array[1] + ".zip" + newLine);
-                writer.write("      hash: " + array[0] + newLine);
-                writer.write("      format: " + array[1] + newLine);
-//                writer.write("      version: null" + newLine);
+                writer.write("    - url: https://github.com/Claragraal/MythPack/raw/main/output/" + entry.getKey() + ".zip" + newLine);
+                writer.write("      hash: " + hash + newLine);
+                writer.write("      format: " + entry.getKey() + newLine);
                 writer.write("      restricted: false" + newLine);
-                writer.write("      permission: forceresourcepacks.pack." + array[1] + newLine);
-//                writer.write("      type: null" + newLine);
-//                writer.write("      variants: null" + newLine);
+                writer.write("      permission: forceresourcepacks.pack." + entry.getKey() + newLine);
             }
         } catch (IOException exception) {
             exception.printStackTrace();
@@ -103,7 +101,7 @@ public final class ResPacker {
         if (output.exists()) output.delete();
 
         try (FileOutputStream fileOutputStream = new FileOutputStream(output)) {
-            try (ZipOutputStream zipOutputStream = new ZipOutputStream(fileOutputStream, StandardCharsets.US_ASCII)) {
+            try (ZipOutputStream zipOutputStream = new ZipOutputStream(fileOutputStream, StandardCharsets.UTF_8)) {
                 List<File> childrenFiles = new ArrayList<>();
                 getChildrenFiles(pack, childrenFiles);
 
