@@ -1,5 +1,7 @@
 package me.claragraal;
 
+import org.apache.commons.io.FileUtils;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
@@ -16,7 +18,7 @@ import java.util.zip.ZipOutputStream;
  */
 public final class ResPacker {
 
-    public static void main(String[] args) throws InterruptedException, IOException {
+    public static void main(String[] args) {
 
         // Get base directory.
         File baseDir = new File(Paths.get("").toAbsolutePath().toString());
@@ -46,10 +48,16 @@ public final class ResPacker {
             return;
         }
 
+        // --- Resource pack files have been found. ---
+
+        // Create a temp copy of each resource pack, optimise the shit out of them, THEN zip
+        resourcePacks.forEach(pack -> new PackOptimiser(baseDir, pack));
+
+        // Create output text file & zip all resource packs to ./output/___.zip
         File textFile = new File("output/config.txt");
         textFile.getParentFile().mkdirs();
         if (textFile.exists()) textFile.delete();
-        textFile.createNewFile();
+        try { textFile.createNewFile(); } catch (IOException exception) { exception.printStackTrace(); }
 
         String newLine = System.getProperty("line.separator");
 
