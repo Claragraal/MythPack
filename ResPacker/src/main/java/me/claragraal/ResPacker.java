@@ -3,6 +3,8 @@ package me.claragraal;
 import org.apache.commons.io.FileUtils;
 
 import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
@@ -101,7 +103,7 @@ public final class ResPacker {
         if (output.exists()) output.delete();
 
         try (FileOutputStream fileOutputStream = new FileOutputStream(output)) {
-            try (ZipOutputStream zipOutputStream = new ZipOutputStream(fileOutputStream)) {
+            try (ZipOutputStream zipOutputStream = new ZipOutputStream(fileOutputStream, StandardCharsets.US_ASCII)) {
                 List<File> childrenFiles = new ArrayList<>();
                 getChildrenFiles(pack, childrenFiles);
 
