@@ -7,9 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -68,17 +66,23 @@ public final class ResPacker {
             writer.write("    permission: forceresourcepacks.pack.game" + newLine);
             writer.write("    variants:" + newLine);
 
+            TreeMap<Integer, File> orderedPacks = new TreeMap<>(Collections.reverseOrder());
             for (File pack : resourcePacks) {
-                String[] array = createZip(pack);
+                int format = Integer.parseInt(pack.getName().split("_")[0]);
+                orderedPacks.put(format, pack);
+            }
+
+            for (Map.Entry<Integer, File> entry : orderedPacks.entrySet()) {
+                String[] array = createZip(entry.getValue());
 
                 writer.write("    - url: https://github.com/Claragraal/MythPack/raw/main/output/" + array[1] + ".zip" + newLine);
                 writer.write("      hash: " + array[0] + newLine);
                 writer.write("      format: " + array[1] + newLine);
-                writer.write("      version: null" + newLine);
+//                writer.write("      version: null" + newLine);
                 writer.write("      restricted: false" + newLine);
                 writer.write("      permission: forceresourcepacks.pack." + array[1] + newLine);
-                writer.write("      type: null" + newLine);
-                writer.write("      variants: null" + newLine);
+//                writer.write("      type: null" + newLine);
+//                writer.write("      variants: null" + newLine);
             }
         } catch (IOException exception) {
             exception.printStackTrace();
