@@ -1,17 +1,13 @@
 package me.claragraal;
 
-import Catalano.Imaging.FastBitmap;
+import com.badlogicgames.libimagequant.*;
 import org.apache.commons.io.FileUtils;
 
-import javax.imageio.*;
-import javax.imageio.stream.ImageInputStream;
-import javax.imageio.stream.ImageOutputStream;
-import java.awt.*;
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.awt.image.DataBufferByte;
+import java.io.*;
 import java.util.*;
-import java.util.List;
 
 /**
  * @author LBuke (Teddeh)
@@ -31,7 +27,7 @@ public final class PackOptimiser {
         TreeMap<Long, File> allFilesMap = new TreeMap<>(Collections.reverseOrder());
         long totalSize = 0;
         List<File> allFiles = new ArrayList<>();
-        getAllFiles(allFiles, originalResourcePack, new String[] {""});
+        getAllFiles(allFiles, originalResourcePack, new String[]{""});
         for (File file : allFiles) {
             long length = file.length();
             totalSize += length;
@@ -46,34 +42,43 @@ public final class PackOptimiser {
         }
 
         // optimise image files
+        TreeMap<Long, File> biggestImages = new TreeMap<>(Collections.reverseOrder());
         List<File> imageFiles = new ArrayList<>();
         long[] totalImagesLength = {0, 0};
-        getAllFiles(imageFiles, tempPack, new String[] {"png"});
+        getAllFiles(imageFiles, tempPack, new String[]{"png"});
         for (File file : imageFiles) {
             totalImagesLength[0] += file.length();
-//            optimiseImage(file);
+            optimiseImage(file);
+            biggestImages.put(file.length(), file);
         }
         System.out.printf("(%s) Image files: %s [%skb]%n", originalResourcePack.getName(), imageFiles.size(), (totalImagesLength[0] / 1024));
 
         // optimise json files
         List<File> jsonFiles = new ArrayList<>();
         long totalJsonLength = 0;
-        getAllFiles(jsonFiles, tempPack, new String[] {"json", "png.mcmeta"}, "lang", "font");
+        getAllFiles(jsonFiles, tempPack, new String[]{"json", "png.mcmeta"}, "lang", "font");
         for (File file : jsonFiles) {
             totalJsonLength += file.length();
-//            optimiseJson(file);
+            optimiseJson(file);
         }
         System.out.printf("(%s) Json files: %s [%skb]%n", originalResourcePack.getName(), jsonFiles.size(), (totalJsonLength / 1024));
 
         // optimise ogg sounds (somehow..)
         List<File> soundFiles = new ArrayList<>();
         long[] totalSoundLength = {0, 0};
-        getAllFiles(soundFiles, tempPack, new String[] {"ogg"});
+        getAllFiles(soundFiles, tempPack, new String[]{"ogg"});
         for (File file : soundFiles) {
             totalSoundLength[0] += file.length();
 //            optimiseOgg(file);
         }
         System.out.printf("(%s) Sound files: %s [%skb]%n", originalResourcePack.getName(), soundFiles.size(), (totalSoundLength[0] / 1024));
+
+//        int x = 0;
+//        for (Map.Entry<Long, File> entry : biggestImages.entrySet()) {
+//            if (x == 20) break;
+//            System.out.printf("  #%s  %s [%skb]%n", (x + 1), entry.getValue().getAbsolutePath(), (entry.getKey() / 1024));
+//            x++;
+//        }
 
         System.out.println();
     }
@@ -113,30 +118,70 @@ public final class PackOptimiser {
         }
     }
 
-    private void optimiseImage(File file) {
-        File opt = new File(file.getParentFile(), String.format("opt-%s", file.getName()));
-        try (ImageInputStream imageInputStream = ImageIO.createImageInputStream(file)) {
-            try (ImageOutputStream imageOutputStream = ImageIO.createImageOutputStream(opt)) {
-                ImageReader imageReader = ImageIO.getImageReaders(imageInputStream).next();
-                imageReader.setInput(imageInputStream);
-
-                ImageWriter imageWriter = ImageIO.getImageWriter(imageReader);
-                imageWriter.setOutput(imageOutputStream);
-                ImageWriteParam imageWriteParam = imageWriter.getDefaultWriteParam();
-                imageWriteParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-                imageWriteParam.setCompressionQuality(0.05f);
-
-                IIOImage iioImage = imageReader.readAll(0, null);
-
-                BufferedImage bufferedImage = (BufferedImage) iioImage.getRenderedImage();
-                FastBitmap fastBitmap = new FastBitmap(bufferedImage);
-
-                Graphics2D graphics = bufferedImage.createGraphics();
-                graphics.drawImage(fastBitmap.toBufferedImage(), 0, 0, null);
-                graphics.dispose();
-
-                imageWriter.write(null, iioImage, imageWriteParam);
+    private void optimiseJson(File file) {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
+            StringBuilder compressed = new StringBuilder();
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                compressed.append(line.replaceAll("\\s+",""));
             }
+
+            file.delete();
+            file.createNewFile();
+
+            try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
+                try (BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream))) {
+                    bufferedWriter.write(compressed.toString());
+                }
+            }
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    private void optimiseImage(File file) {
+        new SharedLibraryLoader().load("imagequant-java");
+        try {
+            BufferedImage input = ImageIO.read(file);
+            try {
+                byte[] pixels = ((DataBufferByte) input.getRaster().getDataBuffer()).getData();
+                for (int i = 0; i < pixels.length; i += 4) {
+                    byte a = pixels[i];
+                    byte b = pixels[i + 1];
+                    byte g = pixels[i + 2];
+                    byte r = pixels[i + 3];
+                    pixels[i] = r;
+                    pixels[i + 1] = g;
+                    pixels[i + 2] = b;
+                    pixels[i + 3] = a;
+                }
+
+                LiqAttribute attribute = new LiqAttribute();
+                LiqImage image = new LiqImage(attribute, pixels, input.getWidth(), input.getHeight(), 0);
+                LiqResult result = image.quantize();
+
+                int size = input.getWidth() * input.getHeight();
+                byte[] quantizedPixels = new byte[size];
+                image.remap(result, quantizedPixels);
+                LiqPalette palette = result.getPalette();
+
+                BufferedImage convertedImage = new BufferedImage(input.getWidth(), input.getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
+                byte[] convertedPixels = ((DataBufferByte) convertedImage.getRaster().getDataBuffer()).getData();
+                for (int i = 0, j = 0; i < size; i++, j += 4) {
+                    int index = quantizedPixels[i] & 0xff;
+                    int color = palette.getColor(index);
+                    convertedPixels[j] = LiqPalette.getA(color);
+                    convertedPixels[j + 1] = LiqPalette.getB(color);
+                    convertedPixels[j + 2] = LiqPalette.getG(color);
+                    convertedPixels[j + 3] = LiqPalette.getR(color);
+                }
+
+                ImageIO.write(convertedImage, "png", file);
+
+                result.destroy();
+                image.destroy();
+                attribute.destroy();
+            } catch (Exception e) {}
         } catch (IOException exception) {
             exception.printStackTrace();
         }

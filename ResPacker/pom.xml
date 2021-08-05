@@ -8,10 +8,18 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>16</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
     </properties>
+
+<!--    <repositories>-->
+<!--        <repository>-->
+<!--            <id>AsposeJavaAPI</id>-->
+<!--            <name>Aspose Java API</name>-->
+<!--            <url>https://repository.aspose.com/repo/</url>-->
+<!--        </repository>-->
+<!--    </repositories>-->
 
     <dependencies>
         <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
@@ -22,23 +30,45 @@
             <scope>compile</scope>
         </dependency>
 
-        <dependency>
-            <groupId>catalano</groupId>
-            <artifactId>core</artifactId>
-            <version>1.6.1</version>
-            <scope>compile</scope>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.aspose</groupId>-->
+<!--            <artifactId>aspose-imaging</artifactId>-->
+<!--            <version>20.12</version>-->
+<!--            <classifier>jdk16</classifier>-->
+<!--        </dependency>-->
 
         <dependency>
-            <groupId>catalano</groupId>
-            <artifactId>image</artifactId>
-            <version>1.6.1</version>
+            <groupId>com.badlogicgames</groupId>
+            <artifactId>libimagequant-java</artifactId>
+            <version>1.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
 
     <build>
         <plugins>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-dependency-plugin</artifactId>-->
+<!--                <version>2.6</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>unpack-dependencies</id>-->
+<!--                        <phase>package</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>unpack-dependencies</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <excludeScope>system</excludeScope>-->
+<!--                            <excludes>META-INF/*.SF</excludes>-->
+<!--                            <excludes>META-INF/*.DSA</excludes>-->
+<!--                            <excludes>META-INF/*.RSA</excludes>-->
+<!--                            <excludeGroupIds>junit,org.mockito,org.hamcrest</excludeGroupIds>-->
+<!--                            <outputDirectory>${project.build.directory}/classes</outputDirectory>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
@@ -51,6 +81,16 @@
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>3.2.4</version>
                 <configuration>
+                    <filters>
+                        <filter>
+                            <artifact>*:*</artifact>
+                            <excludes>
+                                <exclude>META-INF/*.SF</exclude>
+                                <exclude>META-INF/*.DSA</exclude>
+                                <exclude>META-INF/*.RSA</exclude>
+                            </excludes>
+                        </filter>
+                    </filters>
                     <transformers>
                         <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                             <mainClass>me.claragraal.ResPacker</mainClass> <!-- You have to replace this with a path to your main class like my.path.Main -->

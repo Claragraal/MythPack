@@ -1,10 +1,6 @@
 package me.claragraal;
 
-import org.apache.commons.io.FileUtils;
-
 import java.io.*;
-import java.nio.charset.Charset;
-import java.nio.charset.CharsetEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
@@ -19,6 +15,7 @@ import java.util.zip.ZipOutputStream;
 public final class ResPacker {
 
     public static void main(String[] args) {
+        boolean isHashing = args.length > 0;
 
         // Get base directory.
         File baseDir = new File(Paths.get("").toAbsolutePath().toString());
@@ -48,16 +45,38 @@ public final class ResPacker {
             return;
         }
 
-        // --- Resource pack files have been found. ---
-
         // Create a temp copy of each resource pack, optimise the shit out of them, THEN zip
         resourcePacks.forEach(pack -> new PackOptimiser(baseDir, pack));
+
+        Deque<String> hashes = new LinkedList<>();
+        try {
+            ProcessBuilder processBuilder = new ProcessBuilder("zip.bat");
+            processBuilder.redirectErrorStream(true);
+            Process process = processBuilder.start();
+
+            try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {//71b2f43c579f88e549a7268a8be3ceaf15140b00
+                    if (line.length() == 40) {
+                        hashes.addFirst(line);
+                    }
+                }
+            }
+
+            Thread.sleep(10 * 1000);
+        } catch (IOException | InterruptedException exception) {
+            exception.printStackTrace();
+        }
 
         // Create output text file & zip all resource packs to ./output/___.zip
         File textFile = new File("output/config.txt");
         textFile.getParentFile().mkdirs();
         if (textFile.exists()) textFile.delete();
-        try { textFile.createNewFile(); } catch (IOException exception) { exception.printStackTrace(); }
+        try {
+            textFile.createNewFile();
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
 
         String newLine = System.getProperty("line.separator");
 
@@ -75,10 +94,12 @@ public final class ResPacker {
             }
 
             for (Map.Entry<Integer, File> entry : orderedPacks.entrySet()) {
-                File outputZip = new File(baseDir, String.format("output/%s.zip", entry.getKey()));
-                String hash = createSha1(outputZip);
+                File outputZip = new File(baseDir, String.format("output/%s.zip", entry.getValue().getName()));
+                System.out.println(outputZip.getAbsolutePath());
+//                String hash = createSha1(outputZip);
+                String hash = hashes.pollFirst();
 
-                writer.write("    - url: https://github.com/Claragraal/MythPack/raw/main/output/" + entry.getKey() + ".zip" + newLine);
+                writer.write("    - url: https://github.com/Claragraal/MythPack/raw/main/output/" + entry.getValue().getName() + ".zip" + newLine);
                 writer.write("      hash: " + hash + newLine);
                 writer.write("      format: " + entry.getKey() + newLine);
                 writer.write("      restricted: false" + newLine);

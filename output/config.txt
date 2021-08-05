@@ -3,33 +3,33 @@ packs:
     restricted: false
     permission: forceresourcepacks.pack.game
     variants:
-    - url: https://github.com/Claragraal/MythPack/raw/main/output/6.zip
-      hash: 92f7dca1e14b66d239d23ad6860ab55b3390331f
+    - url: https://github.com/Claragraal/MythPack/raw/main/output/6_Myth1.16.2+.zip
+      hash: daf61709ce09ae8ee1cb59af9903d86d83e65956
       format: 6
       restricted: false
       permission: forceresourcepacks.pack.6
-    - url: https://github.com/Claragraal/MythPack/raw/main/output/5.zip
-      hash: d3adbfb7ac5bb6cca285e31ccd9aa944c5f65a9f
+    - url: https://github.com/Claragraal/MythPack/raw/main/output/5_Myth1.15+.zip
+      hash: 6e4c25f272bbd95c85a0dd2435ba4624c028990c
       format: 5
       restricted: false
       permission: forceresourcepacks.pack.5
-    - url: https://github.com/Claragraal/MythPack/raw/main/output/4.zip
-      hash: 912482983156cf1511ca3ac87795eb550d4c1c9e
+    - url: https://github.com/Claragraal/MythPack/raw/main/output/4_Myth1.13+.zip
+      hash: 97b7733c9cee594646b089add927a3fc0d5b7a18
       format: 4
       restricted: false
       permission: forceresourcepacks.pack.4
-    - url: https://github.com/Claragraal/MythPack/raw/main/output/3.zip
-      hash: e72cdd5ac097508a1d4495729d166fc68d461ab5
+    - url: https://github.com/Claragraal/MythPack/raw/main/output/3_Myth1.11+.zip
+      hash: f5e2c3c731ab78ab392c7f0bd51da1eb5e4c9269
       format: 3
       restricted: false
       permission: forceresourcepacks.pack.3
-    - url: https://github.com/Claragraal/MythPack/raw/main/output/2.zip
-      hash: fb2bbd537e7928915084dde67f66d943a0476a6a
+    - url: https://github.com/Claragraal/MythPack/raw/main/output/2_Myth1.9+.zip
+      hash: 9f1672a89aff04ea9ec7383411698899b65a6987
       format: 2
       restricted: false
       permission: forceresourcepacks.pack.2
-    - url: https://github.com/Claragraal/MythPack/raw/main/output/1.zip
-      hash: 209b5d031736c11fe3819453f2efcc51121ad1c2
+    - url: https://github.com/Claragraal/MythPack/raw/main/output/1_Myth1.8+.zip
+      hash: 3d2f7b9cf9da6c4c9aa041e208449892ede5cf52
       format: 1
       restricted: false
       permission: forceresourcepacks.pack.1
