@@ -33,7 +33,9 @@ public final class PackOptimiser {
             totalSize += length;
             allFilesMap.put(length, file);
         }
+
         System.out.printf("Original pack size: %skb%n", (totalSize / 1024));
+
         int i = 0;
         for (Map.Entry<Long, File> entry : allFilesMap.entrySet()) {
             if (i == 10) break;
@@ -42,26 +44,28 @@ public final class PackOptimiser {
         }
 
         // optimise image files
-        TreeMap<Long, File> biggestImages = new TreeMap<>(Collections.reverseOrder());
         List<File> imageFiles = new ArrayList<>();
         long[] totalImagesLength = {0, 0};
         getAllFiles(imageFiles, tempPack, new String[]{"png"});
         for (File file : imageFiles) {
             totalImagesLength[0] += file.length();
             optimiseImage(file);
-            biggestImages.put(file.length(), file);
+            totalImagesLength[1] += new File(file.getAbsolutePath()).length();
         }
-        System.out.printf("(%s) Image files: %s [%skb]%n", originalResourcePack.getName(), imageFiles.size(), (totalImagesLength[0] / 1024));
+        System.out.printf("(%s) Image files: %s [%skb] -> [%skb]%n", originalResourcePack.getName(), imageFiles.size(),
+                (totalImagesLength[0] / 1024), (totalImagesLength[1] / 1024));
 
         // optimise json files
         List<File> jsonFiles = new ArrayList<>();
-        long totalJsonLength = 0;
+        long[] totalJsonLength = {0, 0};
         getAllFiles(jsonFiles, tempPack, new String[]{"json", "png.mcmeta"}, "lang", "font");
         for (File file : jsonFiles) {
-            totalJsonLength += file.length();
+            totalJsonLength[0] += file.length();
             optimiseJson(file);
+            totalJsonLength[1] += new File(file.getAbsolutePath()).length();
         }
-        System.out.printf("(%s) Json files: %s [%skb]%n", originalResourcePack.getName(), jsonFiles.size(), (totalJsonLength / 1024));
+        System.out.printf("(%s) Json files: %s [%skb] -> [%skb]%n", originalResourcePack.getName(), jsonFiles.size(),
+                (totalJsonLength[0] / 1024), (totalJsonLength[1] / 1024));
 
         // optimise ogg sounds (somehow..)
         List<File> soundFiles = new ArrayList<>();
@@ -70,15 +74,17 @@ public final class PackOptimiser {
         for (File file : soundFiles) {
             totalSoundLength[0] += file.length();
 //            optimiseOgg(file);
+            totalSoundLength[1] += new File(file.getAbsolutePath()).length();
         }
-        System.out.printf("(%s) Sound files: %s [%skb]%n", originalResourcePack.getName(), soundFiles.size(), (totalSoundLength[0] / 1024));
+        System.out.printf("(%s) Sound files: %s [%skb] -> [%skb]%n", originalResourcePack.getName(), soundFiles.size(),
+                (totalSoundLength[0] / 1024), (totalSoundLength[1] / 1024));
 
-//        int x = 0;
-//        for (Map.Entry<Long, File> entry : biggestImages.entrySet()) {
-//            if (x == 20) break;
-//            System.out.printf("  #%s  %s [%skb]%n", (x + 1), entry.getValue().getAbsolutePath(), (entry.getKey() / 1024));
-//            x++;
-//        }
+        int x = 0;
+        for (Map.Entry<Long, File> entry : allFilesMap.entrySet()) {
+            if (x == 20) break;
+            System.out.printf("  #%s  %s [%skb]%n", (x + 1), entry.getValue().getAbsolutePath(), (entry.getKey() / 1024));
+            x++;
+        }
 
         System.out.println();
     }
