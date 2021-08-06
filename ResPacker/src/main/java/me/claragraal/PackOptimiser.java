@@ -25,8 +25,8 @@ public final class PackOptimiser {
         }
 
         TreeMap<Long, File> allFilesMap = new TreeMap<>(Collections.reverseOrder());
-        long totalSize = 0;
         List<File> allFiles = new ArrayList<>();
+        long totalSize = 0;
         getAllFiles(allFiles, originalResourcePack, new String[]{""});
         for (File file : allFiles) {
             long length = file.length();
@@ -36,6 +36,7 @@ public final class PackOptimiser {
 
         System.out.printf("Original pack size: %skb%n", (totalSize / 1024));
 
+        // Print out the 10 largest files.
         int i = 0;
         for (Map.Entry<Long, File> entry : allFilesMap.entrySet()) {
             if (i == 10) break;
@@ -52,8 +53,7 @@ public final class PackOptimiser {
             optimiseImage(file);
             totalImagesLength[1] += new File(file.getAbsolutePath()).length();
         }
-        System.out.printf("(%s) Image files: %s [%skb] -> [%skb]%n", originalResourcePack.getName(), imageFiles.size(),
-                (totalImagesLength[0] / 1024), (totalImagesLength[1] / 1024));
+        System.out.printf("(%s) Image files: %s [%skb] -> [%skb]%n", originalResourcePack.getName(), imageFiles.size(), (totalImagesLength[0] / 1024), (totalImagesLength[1] / 1024));
 
         // optimise json files
         List<File> jsonFiles = new ArrayList<>();
@@ -64,8 +64,7 @@ public final class PackOptimiser {
             optimiseJson(file);
             totalJsonLength[1] += new File(file.getAbsolutePath()).length();
         }
-        System.out.printf("(%s) Json files: %s [%skb] -> [%skb]%n", originalResourcePack.getName(), jsonFiles.size(),
-                (totalJsonLength[0] / 1024), (totalJsonLength[1] / 1024));
+        System.out.printf("(%s) Json files: %s [%skb] -> [%skb]%n", originalResourcePack.getName(), jsonFiles.size(), (totalJsonLength[0] / 1024), (totalJsonLength[1] / 1024));
 
         // optimise ogg sounds (somehow..)
         List<File> soundFiles = new ArrayList<>();
@@ -76,15 +75,7 @@ public final class PackOptimiser {
 //            optimiseOgg(file);
             totalSoundLength[1] += new File(file.getAbsolutePath()).length();
         }
-        System.out.printf("(%s) Sound files: %s [%skb] -> [%skb]%n", originalResourcePack.getName(), soundFiles.size(),
-                (totalSoundLength[0] / 1024), (totalSoundLength[1] / 1024));
-
-        int x = 0;
-        for (Map.Entry<Long, File> entry : allFilesMap.entrySet()) {
-            if (x == 20) break;
-            System.out.printf("  #%s  %s [%skb]%n", (x + 1), entry.getValue().getAbsolutePath(), (entry.getKey() / 1024));
-            x++;
-        }
+        System.out.printf("(%s) Sound files: %s [%skb] -> [%skb]%n", originalResourcePack.getName(), soundFiles.size(), (totalSoundLength[0] / 1024), (totalSoundLength[1] / 1024));
 
         System.out.println();
     }
@@ -96,7 +87,7 @@ public final class PackOptimiser {
         for (File child : children) {
             boolean shouldIgnore = false;
             for (String str : ignore) {
-                if (child.getName().equals(str)) {
+                if (child.getName().equalsIgnoreCase(str)) {
                     shouldIgnore = true;
                     break;
                 }
@@ -105,7 +96,7 @@ public final class PackOptimiser {
                 continue;
 
             if (child.isDirectory()) {
-                this.getAllFiles(list, child, extensions);
+                this.getAllFiles(list, child, extensions, ignore);
                 continue;
             }
 
