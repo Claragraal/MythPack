@@ -2,12 +2,12 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"0": "blocks/arcade/horns",
-		"1": "blocks/arcade/wings",
-		"2": "blocks/arcade/dragon",
-		"3": "blocks/arcade/paws and tail",
+		"0": "blocks/arcade/Horns",
+		"1": "blocks/arcade/Wings",
+		"2": "blocks/arcade/Dragon",
+		"3": "blocks/arcade/Pawsandtail",
 		"4": "blocks/arcade/texture",
-		"particle": "blocks/arcade/horns"
+		"particle": "blocks/arcade/Horns"
 	},
 	"elements": [
 		{

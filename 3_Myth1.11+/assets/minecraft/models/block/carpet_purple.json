@@ -2,12 +2,12 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"0": "blocks/galactic/horns",
-		"1": "blocks/galactic/wings",
-		"2": "blocks/galactic/dragon",
-		"3": "blocks/galactic/paws and tail",
-		"4": "blocks/galactic/planets",
-		"particle": "blocks/galactic/horns"
+		"0": "blocks/galactic/Horns",
+		"1": "blocks/galactic/Wings",
+		"2": "blocks/galactic/Dragon",
+		"3": "blocks/galactic/Pawsandtail",
+		"4": "blocks/galactic/Planets",
+		"particle": "blocks/galactic/Horns"
 	},
 	"elements": [
 		{

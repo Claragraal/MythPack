@@ -2,12 +2,12 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"0": "blocks/crystal/horns",
-		"1": "blocks/crystal/wings",
-		"2": "blocks/crystal/dragon",
-		"3": "blocks/crystal/paws and tail",
-		"4": "blocks/crystal/crystal",
-		"particle": "blocks/crystal/horns"
+		"0": "blocks/crystal/Horns",
+		"1": "blocks/crystal/Wings",
+		"2": "blocks/crystal/Dragon",
+		"3": "blocks/crystal/Pawsandtail",
+		"4": "blocks/crystal/Crystal",
+		"particle": "blocks/crystal/Horns"
 	},
 	"elements": [
 		{

@@ -2,12 +2,12 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"0": "blocks/atlantean/horns",
-		"1": "blocks/atlantean/wings",
-		"2": "blocks/atlantean/dragon",
-		"3": "blocks/atlantean/paws and tail",
-		"4": "blocks/atlantean/trident",
-		"particle": "blocks/atlantean/horns"
+		"0": "blocks/atlantean/Horns",
+		"1": "blocks/atlantean/Wings",
+		"2": "blocks/atlantean/Dragon",
+		"3": "blocks/atlantean/Pawsandtail",
+		"4": "blocks/atlantean/Trident",
+		"particle": "blocks/atlantean/Horns"
 	},
 	"elements": [
 		{

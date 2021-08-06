@@ -2,12 +2,12 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"0": "blocks/superhero/horns",
-		"1": "blocks/superhero/wings",
-		"2": "blocks/superhero/dragon",
-		"3": "blocks/superhero/paws and tail",
-		"4": "blocks/superhero/cape",
-		"particle": "blocks/superhero/horns"
+		"0": "blocks/superhero/Horns",
+		"1": "blocks/superhero/Wings",
+		"2": "blocks/superhero/Dragon",
+		"3": "blocks/superhero/Pawsandtail",
+		"4": "blocks/superhero/Cape",
+		"particle": "blocks/superhero/Horns"
 	},
 	"elements": [
 		{

@@ -2,12 +2,12 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"0": "blocks/hellfire/horns",
-		"1": "blocks/hellfire/wings",
-		"2": "blocks/hellfire/dragon",
-		"3": "blocks/hellfire/paws and tail",
-		"4": "blocks/hellfire/fire",
-		"particle": "blocks/hellfire/horns"
+		"0": "blocks/hellfire/Horns",
+		"1": "blocks/hellfire/Wings",
+		"2": "blocks/hellfire/Dragon",
+		"3": "blocks/hellfire/Pawsandtail",
+		"4": "blocks/hellfire/Fire",
+		"particle": "blocks/hellfire/Horns"
 	},
 	"elements": [
 		{

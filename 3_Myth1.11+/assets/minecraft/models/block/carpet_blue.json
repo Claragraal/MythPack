@@ -2,12 +2,12 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"0": "blocks/toxic/horns",
-		"1": "blocks/toxic/wings",
-		"2": "blocks/toxic/dragon",
-		"3": "blocks/toxic/paws and tail",
-		"4": "blocks/toxic/ooison",
-		"particle": "blocks/toxic/horns"
+		"0": "blocks/toxic/Horns",
+		"1": "blocks/toxic/Wings",
+		"2": "blocks/toxic/Dragon",
+		"3": "blocks/toxic/Pawsandtail",
+		"4": "blocks/toxic/Poison",
+		"particle": "blocks/toxic/Horns"
 	},
 	"elements": [
 		{

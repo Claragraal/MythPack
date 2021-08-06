@@ -2,12 +2,12 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"0": "blocks/reaper/horns",
-		"1": "blocks/reaper/wings",
-		"2": "blocks/reaper/dragon",
-		"3": "blocks/reaper/paws and tail",
-		"4": "blocks/reaper/scynth",
-		"particle": "blocks/reaper/horns"
+		"0": "blocks/reaper/Horns",
+		"1": "blocks/reaper/Wings",
+		"2": "blocks/reaper/Dragon",
+		"3": "blocks/reaper/Pawsandtail",
+		"4": "blocks/reaper/Scynth",
+		"particle": "blocks/reaper/Horns"
 	},
 	"elements": [
 		{

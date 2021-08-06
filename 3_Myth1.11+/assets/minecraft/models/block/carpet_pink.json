@@ -2,12 +2,12 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"0": "blocks/billionaire/horns",
-		"1": "blocks/billionaire/wings",
-		"2": "blocks/billionaire/dragon",
-		"3": "blocks/billionaire/paws and tail",
-		"4": "blocks/billionaire/money",
-		"particle": "blocks/billionaire/horns"
+		"0": "blocks/billionaire/Horns",
+		"1": "blocks/billionaire/Wings",
+		"2": "blocks/billionaire/Dragon",
+		"3": "blocks/billionaire/Pawsandtail",
+		"4": "blocks/billionaire/Money",
+		"particle": "blocks/billionaire/Horns"
 	},
 	"elements": [
 		{
