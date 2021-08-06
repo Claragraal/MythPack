@@ -2,12 +2,12 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"0": "blocks/egyptian/horns",
-		"1": "blocks/egyptian/wings",
-		"2": "blocks/egyptian/dragon",
-		"3": "blocks/egyptian/paws and tail",
-		"4": "blocks/egyptian/paw2",
-		"particle": "blocks/egyptian/horns"
+		"0": "blocks/egyptian/Horns",
+		"1": "blocks/egyptian/Wings",
+		"2": "blocks/egyptian/Dragon",
+		"3": "blocks/egyptian/Pawsandtail",
+		"4": "blocks/egyptian/Paw2",
+		"particle": "blocks/egyptian/Horns"
 	},
 	"elements": [
 		{

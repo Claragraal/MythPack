@@ -2,12 +2,12 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"0": "blocks/carnival/horns",
-		"1": "blocks/carnival/wings",
-		"2": "blocks/carnival/dragon",
-		"3": "blocks/carnival/paws and tail",
-		"4": "blocks/carnival/feathers",
-		"particle": "blocks/carnival/horns"
+		"0": "blocks/carnival/Horns",
+		"1": "blocks/carnival/Wings",
+		"2": "blocks/carnival/Dragon",
+		"3": "blocks/carnival/Pawsandtail",
+		"4": "blocks/carnival/Feathers",
+		"particle": "blocks/carnival/Horns"
 	},
 	"elements": [
 		{

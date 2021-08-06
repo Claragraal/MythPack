@@ -5,7 +5,7 @@
 		"0": "blocks/arcade/Horns",
 		"1": "blocks/arcade/Wings",
 		"2": "blocks/arcade/Dragon",
-		"3": "blocks/arcade/Paws and tail",
+		"3": "blocks/arcade/Pawsandtail",
 		"4": "blocks/arcade/texture",
 		"particle": "blocks/arcade/Horns"
 	},
