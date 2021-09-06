@@ -6,7 +6,7 @@
 		"1": "blocks/toxic/wings",
 		"2": "blocks/toxic/dragon",
 		"3": "blocks/toxic/pawsandtail",
-		"4": "blocks/toxic/ooison",
+		"4": "blocks/toxic/poison",
 		"particle": "blocks/toxic/horns"
 	},
 	"elements": [
