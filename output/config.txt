@@ -3,33 +3,38 @@ packs:
     restricted: false
     permission: forceresourcepacks.pack.game
     variants:
+    - url: https://github.com/Claragraal/MythPack/raw/main/output/7_Myth1.18+.zip
+      hash: 7791fb409eb02a869adf6b923e6586d8ac4373c2
+      format: 7
+      restricted: false
+      permission: forceresourcepacks.pack.7
     - url: https://github.com/Claragraal/MythPack/raw/main/output/6_Myth1.16.2+.zip
-      hash: f087425653eba50970957407c010fc5faf9ed535
+      hash: 85a8d97e3b708f47427db85d7e5ee556a8515455
       format: 6
       restricted: false
       permission: forceresourcepacks.pack.6
     - url: https://github.com/Claragraal/MythPack/raw/main/output/5_Myth1.15+.zip
-      hash: c03a76c5f33e1bae4a5dbab298219f90e66abfe7
+      hash: 4f27d68f44aa81f1c43251a15f6352b205b7ce2f
       format: 5
       restricted: false
       permission: forceresourcepacks.pack.5
     - url: https://github.com/Claragraal/MythPack/raw/main/output/4_Myth1.13+.zip
-      hash: 5825e1c2fe31af850dc097560e0dfb0cc0227490
+      hash: c55dfbd5c586d2e206ba68ac296acffb2f0193fe
       format: 4
       restricted: false
       permission: forceresourcepacks.pack.4
     - url: https://github.com/Claragraal/MythPack/raw/main/output/3_Myth1.11+.zip
-      hash: 6e385fa439fdd3a33ecf522f6d5d5dd68349d1c8
+      hash: 0386207d374212a9c50a2574bb8ebeb669851f27
       format: 3
       restricted: false
       permission: forceresourcepacks.pack.3
     - url: https://github.com/Claragraal/MythPack/raw/main/output/2_Myth1.9+.zip
-      hash: 87a4d7a79208ef48425dfb47f12019fefc441608
+      hash: 34e293c92adcbbda05b1e7e952d17f389dc13fa2
       format: 2
       restricted: false
       permission: forceresourcepacks.pack.2
     - url: https://github.com/Claragraal/MythPack/raw/main/output/1_Myth1.8+.zip
-      hash: dac60fdf084e1077b082b3e0a187f975829cbd3e
+      hash: 1ab9f09ae9370899d2c069f1bc0db031909fee83
       format: 1
       restricted: false
       permission: forceresourcepacks.pack.1
