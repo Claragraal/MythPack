@@ -2,11 +2,11 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"0": "blocks/apocalypse/Horns",
-		"1": "blocks/apocalypse/Wings",
-		"2": "blocks/apocalypse/Dragon",
-		"3": "blocks/apocalypse/Pawsandtail",
-		"particle": "blocks/apocalypse/Horns"
+		"0": "blocks/apocalypse/horns",
+		"1": "blocks/apocalypse/wings",
+		"2": "blocks/apocalypse/dragon",
+		"3": "blocks/apocalypse/pawsandtail",
+		"particle": "blocks/apocalypse/horns"
 	},
 	"elements": [
 		{
@@ -229,7 +229,7 @@
 		},
 		"fixed": {
 			"translation": [2, 8.25, 0],
-			"scale": [2, 2, 2]
+			"scale": [1, 1, 1]
 		}
 	},
 	"groups": [0, 1,
